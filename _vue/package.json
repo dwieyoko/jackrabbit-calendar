@@ -1,0 +1,9 @@
+{
+  "name": "widget",
+  "workspaces": [
+    "jack-monthly-calendar-2",
+    "jack-settings",
+    "jack-weekly-calendar",
+    "jack-2-list-views"
+  ]
+}

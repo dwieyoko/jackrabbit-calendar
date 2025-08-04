@@ -1,0 +1,13 @@
+category2:Specialty Camp Fall break
+category2:Specialty Camp Spring break
+category2:Specialty Camp Winter break
+category2:Summer Camp Musical Theatre
+category2:Summer Camp Play Production
+category2:Summer Camp Playhouse
+category2:Summer Camp Themed
+category3:Summer Camp Contracted
+category3:Summer Camp Owner Registration
+category3:Specialty Camp Contracted
+category3:Specialty Camp Owner Registration
+category3:One Time Event Contracted
+category3:One Time Event Owner Registration
