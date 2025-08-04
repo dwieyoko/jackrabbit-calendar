@@ -107,7 +107,47 @@
         <!-- img class="w-full h-auto rounded-md max-w-[640px] mt-2" :src="getImageForTitle(classSelected.name)" -->
         <!-- img class="w-full h-auto rounded-md max-w-[640px] mt-2" :src="getImageForClassItem(classSelected)" -->
 
-        <div class="mt-4 text-black" v-html="classSelected.description"></div>
+        <!-- Meeting Days -->
+        <div v-if="formatMeetingDays(classSelected.meeting_days)" class="mt-4">
+          <div class="font-semibold text-black">Meeting Days:</div>
+          <div class="text-black">{{ formatMeetingDays(classSelected.meeting_days) }}</div>
+        </div>
+
+        <!-- Ages -->
+        <div v-if="formatAgeRange(classSelected.min_age, classSelected.max_age)" class="mt-2">
+          <div class="font-semibold text-black">Age Range:</div>
+          <div class="text-black">{{ formatAgeRange(classSelected.min_age, classSelected.max_age) }}</div>
+        </div>
+
+        <!-- Address -->
+        <div v-if="formatAddress(classSelected.room)" class="mt-2">
+          <div class="font-semibold text-black">Location:</div>
+          <div class="text-black">{{ formatAddress(classSelected.room) }}</div>
+        </div>
+
+        <!-- Description Accordion -->
+        <div v-if="classSelected.description" class="mt-4">
+          <div
+            class="flex items-center justify-between cursor-pointer bg-gray-100 p-3 rounded-lg hover:bg-gray-200"
+            @click="toggleDescription"
+          >
+            <div class="font-semibold text-black">Description</div>
+            <svg
+              :class="{'rotate-180': descriptionExpanded}"
+              class="w-5 h-5 transition-transform duration-200"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </div>
+          <div
+            v-show="descriptionExpanded"
+            class="mt-2 p-3 text-black border-l-4 border-gray-300 bg-gray-50"
+            v-html="classSelected.description"
+          ></div>
+        </div>
 
         <div class="flex flex-row items-start justify-between mt-4">
           <div class="">
@@ -154,6 +194,7 @@ export default {
       locale: 'en',
       showModal: false,
       classSelected: null,
+      descriptionExpanded: false,
       message_weekends: JACKCA_CALENDAR.message_weekends,
       colors: JACKCA_CALENDAR.location_colors,
       weekdayNames: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
@@ -219,6 +260,7 @@ export default {
 
     selectClass(item) {
       this.classSelected = item;
+      this.descriptionExpanded = false; // Reset accordion state
       this.showModal = true;
     },
 
@@ -263,6 +305,60 @@ export default {
       }
 
       return true
+    },
+
+    toggleDescription() {
+      this.descriptionExpanded = !this.descriptionExpanded;
+    },
+
+    formatMeetingDays(meetingDays) {
+      if (!meetingDays) return '';
+
+      const dayNames = {
+        mon: 'Monday',
+        tue: 'Tuesday',
+        wed: 'Wednesday',
+        thu: 'Thursday',
+        fri: 'Friday',
+        sat: 'Saturday',
+        sun: 'Sunday'
+      };
+
+      const activeDays = Object.keys(meetingDays)
+        .filter(day => meetingDays[day])
+        .map(day => dayNames[day]);
+
+      return activeDays.join(', ');
+    },
+
+    formatAgeRange(minAge, maxAge) {
+      if (!minAge && !maxAge) return '';
+
+      const parseAge = (ageString) => {
+        if (!ageString) return null;
+        const match = ageString.match(/P(\d+)Y/);
+        return match ? parseInt(match[1]) : null;
+      };
+
+      const min = parseAge(minAge);
+      const max = parseAge(maxAge);
+
+      if (min && max) {
+        return `Ages ${min}-${max}`;
+      } else if (min) {
+        return `Ages ${min}+`;
+      } else if (max) {
+        return `Ages up to ${max}`;
+      }
+      return '';
+    },
+
+    formatAddress(room) {
+      if (!room) return '';
+
+      // Extract address after the first dash
+      const match = room.match(/^[^-]+-\s*(.+)$/);
+      return match ? match[1].trim() : room;
     },
   }
 };
