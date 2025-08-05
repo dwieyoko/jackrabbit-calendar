@@ -113,6 +113,36 @@
         <!-- img class="w-full h-auto rounded-md max-w-[640px] mt-2" :src="getImageForTitle(classSelected.name)" -->
         <!-- img class="w-full h-auto rounded-md max-w-[640px] mt-2" :src="getImageForClassItem(classSelected)" -->
 
+        <!-- Description -->
+        <div v-if="classSelected.description" class="mt-4">
+          <div class="text-black">
+            <div v-if="!descriptionExpanded" class="description-preview">
+              <div v-html="getFirstLineOfDescription(classSelected.description)"></div>
+              <button
+                @click="toggleDescription"
+                class="mt-2 text-sm font-medium text-blue-600 hover:text-blue-700 hover:bg-blue-50 px-3 py-1.5 rounded-full border border-blue-200 hover:border-blue-300 transition-all duration-200 inline-flex items-center gap-1.5"
+              >
+                <span>Read more</span>
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </button>
+            </div>
+            <div v-else class="description-full">
+              <div v-html="classSelected.description"></div>
+              <button
+                @click="toggleDescription"
+                class="mt-3 text-sm font-medium text-blue-600 hover:text-blue-700 hover:bg-blue-50 px-3 py-1.5 rounded-full border border-blue-200 hover:border-blue-300 transition-all duration-200 inline-flex items-center gap-1.5"
+              >
+                <span>Read less</span>
+                <svg class="w-3.5 h-3.5 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
         <!-- Meeting Days -->
         <div v-if="formatMeetingDays(classSelected.meeting_days)" class="mt-4">
           <div class="font-semibold text-black">Meeting Days:</div>
@@ -129,30 +159,6 @@
         <div v-if="formatAddress(classSelected.room)" class="mt-2">
           <div class="font-semibold text-black">Location:</div>
           <div class="text-black">{{ formatAddress(classSelected.room) }}</div>
-        </div>
-
-        <!-- Description Accordion -->
-        <div v-if="classSelected.description" class="mt-4">
-          <div
-            class="flex items-center justify-between cursor-pointer bg-gray-100 p-3 rounded-lg hover:bg-gray-200"
-            @click="toggleDescription"
-          >
-            <div class="font-semibold text-black">Description</div>
-            <svg
-              :class="{'rotate-180': descriptionExpanded}"
-              class="w-5 h-5 transition-transform duration-200"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-            </svg>
-          </div>
-          <div
-            v-show="descriptionExpanded"
-            class="mt-2 p-3 text-black border-l-4 border-gray-300 bg-gray-50"
-            v-html="classSelected.description"
-          ></div>
         </div>
 
         <div class="flex flex-row items-start justify-between mt-4">
@@ -203,6 +209,7 @@ export default {
       showModal: false,
       classSelected: null,
       descriptionExpanded: false,
+
       message_weekends: JACKCA_CALENDAR.message_weekends,
       colors: JACKCA_CALENDAR.location_colors,
       weekdayNames: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
@@ -374,7 +381,7 @@ export default {
 
     selectClass(item) {
       this.classSelected = item;
-      this.descriptionExpanded = false; // Reset accordion state
+      this.descriptionExpanded = false; // Reset description state
       this.showModal = true;
     },
 
@@ -432,6 +439,34 @@ export default {
     toggleDescription() {
       this.descriptionExpanded = !this.descriptionExpanded;
     },
+
+    getFirstLineOfDescription(description) {
+      if (!description) return '';
+
+      // Remove HTML tags and get plain text
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = description;
+      const plainText = tempDiv.textContent || tempDiv.innerText || '';
+
+      // Split by sentences and take the first one, or limit by characters
+      const sentences = plainText.split(/[.!?]+/);
+      const firstSentence = sentences[0];
+
+      // If first sentence is too long, truncate at around 100 characters
+      if (firstSentence.length > 100) {
+        return firstSentence.substring(0, 100) + '...';
+      }
+
+      // If we have a complete sentence, add the punctuation back
+      if (sentences.length > 1) {
+        return firstSentence + '.';
+      }
+
+      // If it's just one sentence or fragment, return as is
+      return firstSentence;
+    },
+
+
 
     formatMeetingDays(meetingDays) {
       if (!meetingDays) return '';
