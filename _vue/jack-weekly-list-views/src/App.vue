@@ -143,16 +143,15 @@
           </div>
         </div>
 
-        <!-- Meeting Days -->
+        <!-- Meeting Day -->
         <div v-if="formatMeetingDays(classSelected.meeting_days)" class="mt-4">
-          <div class="font-semibold text-black">Meeting Days:</div>
+          <div class="font-semibold text-black">Meeting Day:</div>
           <div class="text-black">{{ formatMeetingDays(classSelected.meeting_days) }}</div>
         </div>
 
         <!-- Ages -->
         <div v-if="formatAgeRange(classSelected.min_age, classSelected.max_age)" class="mt-2">
-          <div class="font-semibold text-black">Age Range:</div>
-          <div class="text-black">{{ formatAgeRange(classSelected.min_age, classSelected.max_age) }}</div>
+          <div class="font-semibold text-black">Ages</div>
         </div>
 
         <!-- Address -->
