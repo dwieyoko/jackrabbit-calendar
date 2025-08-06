@@ -151,8 +151,9 @@
 
         <!-- Ages -->
         <div v-if="formatAgeRange(classSelected.min_age, classSelected.max_age)" class="mt-2">
-          <div class="font-semibold text-black">Ages:</div>
-          <div class="text-black">{{ formatAgeRange(classSelected.min_age, classSelected.max_age) }}</div>
+          <div class="text-black">
+            <span class="font-semibold">Ages:</span> {{ formatAgeRangeNumbers(classSelected.min_age, classSelected.max_age) }}
+          </div>
         </div>
 
         <!-- Address -->
@@ -506,6 +507,28 @@ export default {
         return `Ages ${min}+`;
       } else if (max) {
         return `Ages up to ${max}`;
+      }
+      return '';
+    },
+
+    formatAgeRangeNumbers(minAge, maxAge) {
+      if (!minAge && !maxAge) return '';
+
+      const parseAge = (ageString) => {
+        if (!ageString) return null;
+        const match = ageString.match(/P(\d+)Y/);
+        return match ? parseInt(match[1]) : null;
+      };
+
+      const min = parseAge(minAge);
+      const max = parseAge(maxAge);
+
+      if (min && max) {
+        return `${min}-${max}`;
+      } else if (min) {
+        return `${min}+`;
+      } else if (max) {
+        return `up to ${max}`;
       }
       return '';
     },
