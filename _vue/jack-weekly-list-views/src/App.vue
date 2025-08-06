@@ -151,7 +151,8 @@
 
         <!-- Ages -->
         <div v-if="formatAgeRange(classSelected.min_age, classSelected.max_age)" class="mt-2">
-          <div class="font-semibold text-black">Ages</div>
+          <div class="font-semibold text-black">Ages:</div>
+          <div class="text-black">{{ formatAgeRange(classSelected.min_age, classSelected.max_age) }}</div>
         </div>
 
         <!-- Address -->
