@@ -45,7 +45,7 @@
 
         <div class="jack-item-tuition col-span-11 md:col-span-1 mt-2 md:mt-0 hidden md:block">
           <div v-if="item.tuition && item.tuition.fee" class="jack-item-fee flex flex-row items-center gap-2">
-            <div class="jack-item-fee-label">{{ isClassRecurring(item) ? label_monthly_tuition : label_tutition}}</div>
+            <div class="jack-item-fee-label">{{ isClassRecurring(item) ? label_tutition : label_monthly_tuition}}</div>
             <div class="jack-item-fee-amount font-bold">${{ item.tuition.fee }}</div>
           </div>
         </div>

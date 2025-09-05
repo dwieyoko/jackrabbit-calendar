@@ -157,7 +157,7 @@
 
           </div>
           <div v-if="classSelected.tuition && classSelected.tuition.fee" class="font-bold text-black">
-            {{ isClassRecurring(classSelected) ? label_monthly_tuition : label_tutition}}: ${{ classSelected.tuition.fee }}
+            {{ isTwelveWeekClass(classSelected) ? label_tutition : (isClassRecurring(classSelected) ? label_monthly_tuition : label_tutition) }}: ${{ classSelected.tuition.fee }}
           </div>
         </div>
 
@@ -484,6 +484,24 @@ export default {
       // Extract address after the first dash
       const match = room.match(/^[^-]+-\s*(.+)$/);
       return match ? match[1].trim() : room;
+    },
+    
+    isTwelveWeekClass(item) {
+      // Check if the class name or description mentions 12 weeks
+      const hasNameMatch = item.name && item.name.toLowerCase().includes('12 week');
+      const hasDescMatch = item.description && item.description.toLowerCase().includes('12 week');
+      
+      // Calculate the duration in weeks if start_date and end_date are available
+      let weeksDuration = 0;
+      if (item.start_date && item.end_date) {
+        const startDate = DateTime.fromISO(item.start_date);
+        const endDate = DateTime.fromISO(item.end_date);
+        const diffInWeeks = endDate.diff(startDate, 'weeks').weeks;
+        weeksDuration = Math.round(diffInWeeks);
+      }
+      
+      // Return true if it's a 12-week class based on any criteria
+      return hasNameMatch || hasDescMatch || weeksDuration === 12;
     },
   }
 };
