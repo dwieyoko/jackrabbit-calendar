@@ -153,8 +153,8 @@ export default {
             // Convertimos la diferencia a días
             const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
-            // Consideramos la clase recurrente si hay 84 días (12 semanas) o más entre las fechas
-            return diffDays >= 84;
+            // Consideramos la clase recurrente si hay 98 días (14 semanas) o más entre las fechas
+            return diffDays >= 98;
         },
 
         tConvert (time) {
