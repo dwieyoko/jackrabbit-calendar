@@ -4,7 +4,7 @@
  * Plugin Name: Jackrabbit Calendar
  * Plugin URI:  https://
  * Description: Jackrabbit Calendar
- * Version:     1.4.12
+ * Version:     1.4.14
  * Requires PHP: 5.6
  * Author:      Alejandro
  * Author URI:  http://
