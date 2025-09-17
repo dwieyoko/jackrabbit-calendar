@@ -175,7 +175,7 @@
 
           </div>
           <div v-if="classSelected.tuition && classSelected.tuition.fee" class="font-bold text-black">
-          {{ isClassRecurring(classSelected) ? label_tutition : label_monthly_tuition}}: ${{ classSelected.tuition.fee }}
+            {{ isClassRecurring(classSelected) ? label_monthly_tuition : label_tutition}}: ${{ classSelected.tuition.fee }}
           </div>
         </div>
 
