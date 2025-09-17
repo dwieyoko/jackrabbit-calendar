@@ -44,8 +44,8 @@ $atts = shortcode_atts( array(
 	// Nuevo metodo de filtros
 	'filters' => 'category1, category2, category3',
 	'filters_names' => 'All cat1, All cat2, All cat3',
-	'fee_label1' => 'Monthly Tuition',
-	'fee_label2' => 'Tuition',
+	'fee_label1' => 'Tuition',
+	'fee_label2' => 'Monthly Tuition',
     'view' => 'week',
     'btn_list' => 'List',
     'btn_week' => 'Calendar',
