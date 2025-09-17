@@ -157,7 +157,7 @@
 
           </div>
           <div v-if="classSelected.tuition && classSelected.tuition.fee" class="font-bold text-black">
-            {{ isFourteenWeekClass(classSelected) ? label_tutition : (isClassRecurring(classSelected) ? label_monthly_tuition : label_tutition) }}: ${{ classSelected.tuition.fee }}
+            {{ isFourteenWeekClass(classSelected) ? label_monthly_tuition : label_tutition }}: ${{ classSelected.tuition.fee }}
           </div>
         </div>
 
