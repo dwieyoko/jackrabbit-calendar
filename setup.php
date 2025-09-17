@@ -4,7 +4,7 @@
  * Plugin Name: Jackrabbit Calendar
  * Plugin URI:  https://
  * Description: Jackrabbit Calendar
- * Version:     1.4.10
+ * Version:     1.4.12
  * Requires PHP: 5.6
  * Author:      Alejandro
  * Author URI:  http://
@@ -47,7 +47,7 @@ if ( !class_exists('Jack_Calendar') ) :
 		{
 			// Version
 			if ( ! defined( 'JACKCA_VERSION' ) ) {
-				define( 'JACKCA_VERSION', '1.4.8' );
+				define( 'JACKCA_VERSION', '1.4.12' );
 			}
 
 			if ( ! defined( 'JACKCA_SITE_URL' ) ) {
