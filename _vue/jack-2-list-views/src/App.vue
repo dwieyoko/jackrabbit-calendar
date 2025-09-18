@@ -500,8 +500,8 @@ export default {
         weeksDuration = Math.round(diffInWeeks);
       }
       
-  // Return true if it's a 14-week class or longer
-  return hasNameMatch || hasDescMatch || weeksDuration >= 14;
+      // Return true if it's a 14-week class or longer
+      return weeksDuration >= 14;
     },
   }
 };
