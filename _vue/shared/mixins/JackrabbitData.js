@@ -143,17 +143,16 @@ export default {
         },
 
         isClassRecurring(row) {
-            // Parseamos las fechas de inicio y fin
-            const startDate = new Date(row.start_date);
-            const endDate = new Date(row.end_date);
-
-            // Calculamos la diferencia en milisegundos
+            // Jika format MM/DD/YYYY
+            function parseDate(str) {
+                const [month, day, year] = str.split('/');
+                return new Date(`${year}-${month}-${day}`);
+            }
+            
+            const startDate = parseDate(row.start_date);
+            const endDate = parseDate(row.end_date);
             const diffTime = Math.abs(endDate - startDate);
-
-            // Convertimos la diferencia a días
             const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-            // Consideramos la clase recurrente si hay 98 días (14 semanas) o más entre las fechas
             return diffDays >= 98;
         },
 
