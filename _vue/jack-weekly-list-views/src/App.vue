@@ -172,11 +172,11 @@
               <div v-if="classSelected.start_time">Time: {{ formatTime(classSelected.start_time)}}</div>
               <div v-if="classSelected.end_time">- {{ formatTime(classSelected.end_time)}}</div>
             </div>
-
+            <div v-if="classSelected.tuition && classSelected.tuition.fee" class="flex flex-row items-center font-bold text-black gap-2">
+              {{ isClassRecurring(classSelected) ? label_monthly_tuition : label_tutition}}: ${{ classSelected.tuition.fee }}
+            </div>
           </div>
-          <div v-if="classSelected.tuition && classSelected.tuition.fee" class="font-bold text-black">
-            {{ isClassRecurring(classSelected) ? label_monthly_tuition : label_tutition}}: ${{ classSelected.tuition.fee }}
-          </div>
+          
         </div>
 
 
